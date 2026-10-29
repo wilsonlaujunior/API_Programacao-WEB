@@ -1,0 +1,1253 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API de Gestão de Vendas e Entregas",
+    "description": "Contrato OpenAPI da versão atual: clientes, produtos, usuários e fornecedores. Módulos de pedidos e entregas ainda não especificados.",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/v1/api/clientes": {
+      "get": {
+        "summary": "Listar Cliente",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "nome_c",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de recursos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Criar Cliente",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cliente"
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Recurso criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/clientes/{id_c}": {
+      "delete": {
+        "summary": "Remover Cliente",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id_c",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido, sem corpo"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/produtos/": {
+      "get": {
+        "summary": "Listar Produto",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "nome_p",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quantidadeEstoque",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Produto"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/produtos": {
+      "post": {
+        "summary": "Cadastrar Produto",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome_p": {
+                    "type": "string"
+                  },
+                  "descrição_p": {
+                    "type": "string"
+                  },
+                  "preço_p": {
+                    "type": "number"
+                  },
+                  "quantidadeEstoque": {
+                    "type": "integer"
+                  },
+                  "categoria": {
+                    "type": "string"
+                  },
+                  "status_p": {
+                    "type": "string",
+                    "description": "estado",
+                    "enum": [
+                      "ATIVO",
+                      "INATIVO"
+                    ]
+                  },
+                  "fornecedorId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "data_fabricação": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "data_validade": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "nome_p",
+                  "descrição_p",
+                  "preço_p",
+                  "quantidadeEstoque",
+                  "categoria",
+                  "status_p",
+                  "fornecedorId",
+                  "data_fabricação",
+                  "data_validade"
+                ]
+              },
+              "example": {
+                "nome_p": "tempor fugiat aute",
+                "descrição_p": "Excepteur consectetur est laborum dolore",
+                "preço_p": 53220906.865085274,
+                "quantidadeEstoque": 48750879,
+                "categoria": "laborum commodo",
+                "status_p": "INATIVO",
+                "fornecedorId": "13"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Recurso criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Produto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/produtos/{id_p}": {
+      "delete": {
+        "summary": "Remover Produto",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id_p",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido, sem corpo"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/usuarios": {
+      "get": {
+        "summary": "Listar Usuario",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "nome_u",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de recursos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioPublico"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Cadastrar Usuario",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Recurso criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioPublico"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/usuarios/{id_u}": {
+      "delete": {
+        "summary": "Remover Usuario",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id_u",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido, sem corpo"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/fornecedores/{nome_f}": {
+      "get": {
+        "summary": "Listar Fornecedor",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "nome_f",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nome_f",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fornecedores encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Fornecedor"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/fornecedores": {
+      "post": {
+        "summary": "Cadastrar Fornecedor",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fornecedor"
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Recurso criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fornecedor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api/fornecedores/{id_f}": {
+      "delete": {
+        "summary": "Remover Fornecedor",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id_f",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido, sem corpo"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de recurso",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id_u": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome_u": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          },
+          "email_u": {
+            "type": "string",
+            "format": "email"
+          },
+          "senha_u": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 100
+          },
+          "telefone_u": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "status_u": {
+            "type": "string",
+            "description": "estado",
+            "enum": [
+              "INATIVO",
+              "ATIVO"
+            ]
+          },
+          "createdAt_u": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt_u": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id_u",
+          "nome_u",
+          "email_u",
+          "senha_u",
+          "telefone_u",
+          "status_u",
+          "createdAt_u",
+          "updateAt_u"
+        ]
+      },
+      "Produto": {
+        "type": "object",
+        "properties": {
+          "id_p": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome_p": {
+            "type": "string"
+          },
+          "descrição_p": {
+            "type": "string"
+          },
+          "preço_p": {
+            "type": "number"
+          },
+          "quantidadeEstoque": {
+            "type": "integer"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "status_p": {
+            "type": "string",
+            "description": "estado",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ]
+          },
+          "fornecedorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data_fabricação": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "data_validade": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "nome_p",
+          "descrição_p",
+          "status_p",
+          "preço_p",
+          "id_p",
+          "quantidadeEstoque",
+          "categoria",
+          "fornecedorId",
+          "data_fabricação",
+          "data_validade"
+        ]
+      },
+      "Cliente": {
+        "type": "object",
+        "properties": {
+          "id_c": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome_c": {
+            "type": "string"
+          },
+          "email_c": {
+            "type": "string",
+            "format": "email"
+          },
+          "telefone_c": {
+            "type": "string"
+          },
+          "status_c": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id_c",
+          "nome_c",
+          "email_c",
+          "telefone_c",
+          "status_c"
+        ]
+      },
+      "Fornecedor": {
+        "type": "object",
+        "properties": {
+          "id_f": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "razaoSocial_f": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "nomeFantasia_f": {
+            "type": "string",
+            "description": "estado",
+            "minLength": 3,
+            "maxLength": 100
+          },
+          "cnpj": {
+            "type": "string",
+            "maxLength": 18
+          },
+          "email_f": {
+            "type": "string",
+            "format": "email"
+          },
+          "telefone_f": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "endereco_f": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "cidade": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "estado": {
+            "type": "string",
+            "maxLength": 2
+          },
+          "cep": {
+            "type": "string",
+            "maxLength": 9
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ]
+          },
+          "createdAT": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAT": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id_f",
+          "razaoSocial_f",
+          "nomeFantasia_f",
+          "email_f",
+          "cnpj",
+          "telefone_f",
+          "endereco_f",
+          "cidade",
+          "estado",
+          "cep",
+          "status",
+          "createdAT",
+          "modifiedAT"
+        ]
+      },
+      "UsuarioPublico": {
+        "type": "object",
+        "properties": {
+          "id_u": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome_u": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          },
+          "email_u": {
+            "type": "string",
+            "format": "email"
+          },
+          "telefone_u": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "status_u": {
+            "type": "string",
+            "description": "estado",
+            "enum": [
+              "INATIVO",
+              "ATIVO"
+            ]
+          },
+          "createdAt_u": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt_u": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id_u",
+          "nome_u",
+          "email_u",
+          "telefone_u",
+          "status_u",
+          "createdAt_u",
+          "updateAt_u"
+        ]
+      },
+      "InvalidParam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "reason"
+        ]
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "invalidParams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvalidParam"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "instance"
+        ]
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
