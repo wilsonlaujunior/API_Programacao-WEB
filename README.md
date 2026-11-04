@@ -115,8 +115,6 @@ A implementação prevista para o projeto utiliza **Python 3.12 ou superior, Fas
 | Alexandre Vitoriano Ulloa | 2840482423*** |
 | Wilson Lau Junior | 2840482423013 |
 
-> O registro acadêmico de Alexandre foi mantido exatamente como constava no README anterior, para preenchimento manual posterior.
-
 ## 8. Limites do escopo e possibilidades de evolução
 
 Apesar do nome do projeto, o contrato atual está concentrado no gerenciamento dos cadastros de clientes, produtos, usuários e fornecedores. **Não estão documentadas nesta versão operações de vendas, pedidos, itens de venda ou acompanhamento de entregas.**
