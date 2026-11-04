@@ -1,208 +1,91 @@
-# API de Gestão de Vendas e Entregas
+API de Gestão de Vendas e Entregas
+1. Visão geral
+A API de Gestão de Vendas e Entregas é uma API REST acadêmica, especificada segundo a abordagem Design-First. Seu contrato define operações para organizar os cadastros de clientes, produtos, usuários e fornecedores de um pequeno negócio.
 
-## 1. Visão geral
+A especificação é documentada no Apidog, utilizando o padrão OpenAPI 3.0.1. As requisições e respostas utilizam o formato JSON e os recursos são acessados por endpoints versionados.
+2. Objetivo e público-alvo
+O objetivo do projeto é disponibilizar uma interface padronizada para cadastrar, consultar, atualizar e remover informações essenciais à organização de clientes, produtos e fornecedores, além de manter os registros de usuários do sistema.
 
-A **API de Gestão de Vendas e Entregas** é uma API REST desenvolvida
-para disponibilizar operações de gerenciamento de clientes, produtos,
-usuários e fornecedores.
+O público-alvo são pequenos negócios, equipes administrativas e operadores responsáveis pelo controle de cadastros e estoque, que necessitam centralizar e consultar essas informações por meio de uma API.
+3. Recursos e funcionalidades
+A versão atual do contrato contempla quatro recursos:
+- Produtos: cadastro, listagem com filtros, consulta por identificador, atualização parcial e remoção. Inclui informações de preço, estoque, categoria, situação, datas e fornecedor relacionado.
+- Fornecedores: cadastro, listagem com filtros, consulta por identificador, atualização parcial e remoção. Inclui dados cadastrais e informações de contato.
+- Clientes: cadastro, listagem com filtro por nome e remoção por identificador.
+- Usuários: cadastro, listagem com filtro por nome e remoção por identificador. As respostas públicas não expõem a senha.
+Escopo do CRUD: Produtos e Fornecedores possuem o ciclo CRUD completo. Clientes e Usuários possuem, nesta versão, operações de criação, listagem e remoção; consulta individual e atualização desses dois recursos não estão previstas no contrato atual.
+4. Arquitetura dos recursos e relacionamentos
+A API organiza suas operações por recurso, utilizando endpoints próprios e schemas reutilizáveis definidos em components/schemas na especificação OpenAPI.
+4.1. Produtos
+Representa os itens cadastrados para controle. Seus principais campos são:
+- id_p: identificador do produto;
+- nome_p e descrição_p: nome e descrição;
+- preço_p: preço;
+- quantidadeEstoque: quantidade disponível;
+- categoria e status_p: classificação e situação;
+- fornecedorId: identificador do fornecedor relacionado;
+- data_fabricação e data_validade: datas do produto.
+4.2. Fornecedores
+Representa as empresas ou pessoas que fornecem os produtos. Seus campos incluem id_f, razaoSocial_f, nomeFantasia_f, cnpj, email_f, telefone_f, endereco_f, cidade, estado, cep, status, createdAT e modifiedAT.
+4.3. Clientes
+Representa as pessoas cadastradas como clientes. Seus campos incluem id_c, nome_c, email_c, telefone_c e status_c.
+4.4. Usuários
+Representa as pessoas autorizadas a utilizar o sistema. Seus campos incluem id_u, nome_u, email_u, senha_u, telefone_u, status_u, createdAt_u e updateAt_u.
 
-A API define contratos para troca de informações no formato JSON,
-utilizando recursos identificados por URLs e métodos HTTP. Sua
-especificação é organizada segundo a abordagem **Design-First**, na qual
-os contratos da API são definidos e documentados antes da implementação
-dos serviços.
+A senha é um dado de entrada e não deve ser apresentada nas respostas públicas da API.
+4.5. Relacionamento entre recursos
+O campo fornecedorId, presente no recurso Produto, identifica o fornecedor associado ao produto. Os demais relacionamentos de vendas, pedidos e entregas ainda não fazem parte do contrato desta versão.
+5. Endpoints documentados
+A versão atual utiliza o prefixo /api/v1.
+Recurso	Método	Endpoint	Finalidade
+Produtos	GET	/api/v1/produtos	Listar e filtrar produtos
+Produtos	POST	/api/v1/produtos	Cadastrar produto
+Produtos	GET	/api/v1/produtos/{id_p}	Consultar produto por ID
+Produtos	PATCH	/api/v1/produtos/{id_p}	Atualizar parcialmente um produto
+Produtos	DELETE	/api/v1/produtos/{id_p}	Remover produto
+Fornecedores	GET	/api/v1/fornecedores	Listar e filtrar fornecedores
+Fornecedores	POST	/api/v1/fornecedores	Cadastrar fornecedor
+Fornecedores	GET	/api/v1/fornecedores/{id_f}	Consultar fornecedor por ID
+Fornecedores	PATCH	/api/v1/fornecedores/{id_f}	Atualizar parcialmente um fornecedor
+Fornecedores	DELETE	/api/v1/fornecedores/{id_f}	Remover fornecedor
+Clientes	GET	/api/v1/clientes	Listar e filtrar clientes
+Clientes	POST	/api/v1/clientes	Cadastrar cliente
+Clientes	DELETE	/api/v1/clientes/{id_c}	Remover cliente
+Usuários	GET	/api/v1/usuarios	Listar e filtrar usuários
+Usuários	POST	/api/v1/usuarios	Cadastrar usuário
+Usuários	DELETE	/api/v1/usuarios/{id_u}	Remover usuário
 
-A documentação da API é mantida no **Apidog**, com especificação baseada
-em **OpenAPI**.
 
-## 2. Objetivo
+5.1. Parâmetros de consulta
+As operações de listagem aceitam parâmetros para filtragem e paginação:
+- Produtos: nome_p, quantidadeEstoque, status_p, page e pageSize.
+- Fornecedores: razaoSocial_f, nomeFantasia_f, cnpj, status, page e pageSize.
+- Clientes: nome_c, page e pageSize.
+- Usuários: nome_u, page e pageSize.
+Os parâmetros opcionais, seus tipos, limites e valores permitidos estão detalhados na especificação OpenAPI do Apidog.
+6. Padrões técnicos e documentação
+- Estilo arquitetural: REST.
+- Abordagem de desenvolvimento: Design-First.
+- Formato de dados: JSON.
+- Protocolo: HTTP/HTTPS.
+- Prefixo de versionamento das rotas: /api/v1.
+- Ferramenta de design e documentação: Apidog.
+- Formato da especificação: OpenAPI 3.0.1.
+- Identificadores: UUID nos recursos em que esse formato está definido no contrato.
+- Schemas: modelos de dados e DTOs definidos em components/schemas e referenciados pelas operações.
+A especificação documenta respostas de sucesso e de erro para as operações, incluindo validações de entrada e situações como recurso não encontrado ou conflito de integridade, conforme cada endpoint.
 
-O objetivo do projeto é especificar e desenvolver uma API REST para
-centralizar operações relacionadas ao cadastro e à consulta de
-informações utilizadas em um sistema de gestão de vendas e entregas.
+A implementação prevista para o projeto utiliza Python 3.12 ou superior, FastAPI, Pydantic v2 e pytest. Essas tecnologias compõem a stack planejada para implementação e testes; este README descreve principalmente o contrato da API.
+7. Equipe
+Integrante	Registro acadêmico
+Adriana Gasparetto Martelli	2840482423026
+Alexandre Vitoriano Ulloa	2840482423***
+Wilson Lau Junior	2840482423013
 
-A versão atual do contrato contempla quatro recursos principais:
 
--   **Clientes:** armazenamento e consulta dos dados dos clientes.
--   **Produtos:** cadastro e consulta de produtos, incluindo informações
-    de preço, estoque, categoria, validade e fornecedor.
--   **Usuários:** cadastro e consulta de usuários do sistema.
--   **Fornecedores:** cadastro e consulta de fornecedores e seus dados
-    cadastrais.
+O registro acadêmico de Alexandre foi mantido exatamente como constava no README anterior, para preenchimento manual posterior.
 
-## 3. Funcionalidades previstas no contrato atual
+8. Limites do escopo e possibilidades de evolução
+Apesar do nome do projeto, o contrato atual está concentrado no gerenciamento dos cadastros de clientes, produtos, usuários e fornecedores. Não estão documentadas nesta versão operações de vendas, pedidos, itens de venda ou acompanhamento de entregas.
 
-As operações documentadas para os quatro recursos incluem:
-
--   Consultar clientes, com possibilidade de filtrar pelo nome.
--   Cadastrar clientes.
--   Excluir clientes pelo identificador.
--   Consultar produtos, com filtros por nome e quantidade em estoque.
--   Cadastrar produtos, associando-os a um fornecedor.
--   Excluir produtos pelo identificador.
--   Consultar usuários, com possibilidade de filtrar pelo nome.
--   Cadastrar usuários.
--   Excluir usuários pelo identificador.
--   Consultar fornecedores pelo nome.
--   Cadastrar fornecedores.
--   Excluir fornecedores pelo identificador.
-
-**Observação:** a especificação atual contempla operações de consulta,
-cadastro e exclusão. Operações de atualização, consulta individual por
-identificador para todos os recursos, pedidos, vendas e processos de
-entrega não fazem parte do contrato documentado nesta versão.
-
-## 4. Arquitetura dos recursos e relacionamentos
-
-A API está organizada em quatro recursos:
-
-### 4.1. Clientes
-
-Representa as pessoas cadastradas como clientes do sistema. Os campos
-definidos no contrato incluem:
-
--   `id_c`: identificador do cliente.
--   `nome_c`: nome do cliente.
--   `email_c`: endereço de e-mail.
--   `telefone_c`: telefone para contato.
--   `status_c`: situação cadastral.
-
-### 4.2. Produtos
-
-Representa os produtos cadastrados para gerenciamento. Os campos
-definidos no contrato incluem:
-
--   `id_p`: identificador do produto.
--   `nome_p`: nome do produto.
--   `descrição_p`: descrição do produto.
--   `preço_p`: preço do produto.
--   `quantidadeEstoque`: quantidade disponível em estoque.
--   `categoria`: categoria do produto.
--   `status_p`: situação do produto.
--   `fornecedorId`: identificador do fornecedor relacionado.
--   `data_fabricação`: data de fabricação.
--   `data_validade`: data de validade.
-
-**Relacionamento:** o campo `fornecedorId` identifica o fornecedor
-associado ao produto.
-
-### 4.3. Usuários
-
-Representa os usuários cadastrados para utilização do sistema. Os campos
-definidos no contrato incluem:
-
--   `id_u`: identificador do usuário.
--   `nome_u`: nome do usuário.
--   `email_u`: endereço de e-mail.
--   `senha_u`: senha utilizada no cadastro.
--   `telefone_u`: telefone para contato.
--   `status_u`: situação do usuário.
--   `createdAt_u`: data de criação do registro.
--   `updateAt_u`: data da última atualização.
-
-Por segurança, a senha não deve ser exposta nas respostas da API.
-
-### 4.4. Fornecedores
-
-Representa as empresas ou pessoas responsáveis pelo fornecimento dos
-produtos. Os campos definidos no contrato incluem:
-
--   `id_f`: identificador do fornecedor.
--   `razaoSocial_f`: razão social.
--   `nomeFantasia_f`: nome fantasia.
--   `cnpj`: CNPJ.
--   `email_f`: endereço de e-mail.
--   `telefone_f`: telefone para contato.
--   `endereco_f`: endereço.
--   `cidade`: cidade.
--   `estado`: unidade federativa.
--   `cep`: código de endereçamento postal.
--   `status`: situação cadastral.
--   `createdAT`: data de criação do registro.
--   `modifiedAT`: data da última modificação.
-
-## 5. Endpoints documentados
-
-A versão atual utiliza o prefixo `/v1/api`.
-
-  ---------------------------------------------------------------------------------------
-  Recurso           Método            Endpoint                          Operação
-  ----------------- ----------------- --------------------------------- -----------------
-  Clientes          GET               `/v1/api/clientes`                Listar e filtrar
-                                                                        clientes
-
-  Clientes          POST              `/v1/api/clientes`                Cadastrar cliente
-
-  Clientes          DELETE            `/v1/api/clientes/{id_c}`         Excluir cliente
-
-  Produtos          GET               `/v1/api/produtos/`               Listar e filtrar
-                                                                        produtos
-
-  Produtos          POST              `/v1/api/produtos`                Cadastrar produto
-
-  Produtos          DELETE            `/v1/api/produtos/{id_p}`         Excluir produto
-
-  Usuários          GET               `/v1/api/usuarios`                Listar e filtrar
-                                                                        usuários
-
-  Usuários          POST              `/v1/api/usuarios`                Cadastrar usuário
-
-  Usuários          DELETE            `/v1/api/usuarios/{id_u}`         Excluir usuário
-
-  Fornecedores      GET               `/v1/api/fornecedores/{nome_f}`   Consultar
-                                                                        fornecedor pelo
-                                                                        nome
-
-  Fornecedores      POST              `/v1/api/fornecedores`            Cadastrar
-                                                                        fornecedor
-
-  Fornecedores      DELETE            `/v1/api/fornecedores/{id_f}`     Excluir
-                                                                        fornecedor
-  ---------------------------------------------------------------------------------------
-
-Os parâmetros de consulta documentados são:
-
--   Clientes: `nome_c`.
--   Produtos: `nome_p` e `quantidadeEstoque`.
--   Usuários: `nome_u`.
-
-## 6. Padrões técnicos
-
-A especificação e a implementação do projeto seguem os seguintes padrões
-e tecnologias:
-
--   **Estilo arquitetural:** REST.
--   **Formato de dados:** JSON.
--   **Protocolo:** HTTP/HTTPS.
--   **Versionamento das rotas:** `/v1/api`.
--   **Documentação e design do contrato:** Apidog.
--   **Especificação da API:** OpenAPI.
--   **Abordagem de desenvolvimento:** Design-First.
--   **Identificadores:** UUID nos recursos que possuem identificadores
-    definidos dessa forma no contrato.
-
-Na implementação prevista pelo projeto, são utilizadas tecnologias como
-Python 3.12+, FastAPI, Pydantic v2 e pytest.
-
-## 7. Equipe
-
-  Integrante                    Registro acadêmico
-  ----------------------------- --------------------
-  Adriana Gasparetto Martelli   2840482423026
-  Alexandre Vitoriano Ulloa     2840482423\*\*\*
-  Wilson Lau Junior             2840482423013
-
-> O registro acadêmico de Alexandre está parcialmente informado no
-> README anterior e deve ser completado antes da entrega final.
-
-## 8. Escopo e evolução
-
-A versão atual da API concentra-se no gerenciamento de clientes,
-produtos, usuários e fornecedores, com operações de consulta, cadastro e
-exclusão.
-
-A evolução do projeto poderá contemplar funcionalidades relacionadas a
-pedidos, vendas, itens de venda, tarefas de entrega, prazos,
-acompanhamento de entregas e comprovantes de recebimento. Esses recursos
-são possibilidades de evolução e deverão ser especificados no Apidog
-antes de serem incorporados ao contrato e à implementação.
+Como evolução futura, o projeto poderá incorporar recursos para registrar pedidos e vendas, relacionar itens vendidos, organizar tarefas e responsáveis por entregas, controlar prazos e status e registrar comprovantes de recebimento. Cada novo recurso deverá ser previamente especificado e documentado no Apidog antes de integrar o contrato da API.
