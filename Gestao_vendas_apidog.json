@@ -2,554 +2,126 @@
   "openapi": "3.0.1",
   "info": {
     "title": "API de Gestão de Vendas e Entregas",
-    "description": "Contrato OpenAPI da versão atual: clientes, produtos, usuários e fornecedores. Módulos de pedidos e entregas ainda não especificados.",
-    "version": "1.0.0"
+    "description": "API REST acadêmica para gestão de cadastros de clientes, produtos, usuários e fornecedores. O contrato segue a abordagem Design-First e é documentado em OpenAPI no Apidog. Para atender ao ciclo CRUD completo exigido na atividade, Produtos e Fornecedores possuem operações de listagem, consulta por identificador, criação, atualização parcial (PATCH) e remoção. Clientes e Usuários permanecem com operações básicas de consulta, cadastro e remoção. Público-alvo: equipes e operadores de pequenos negócios que precisam organizar cadastros e estoque. Pedidos, vendas e fluxos de entrega não fazem parte do escopo desta versão.",
+    "version": "1.2.0"
   },
-  "tags": [],
+  "tags": [
+    {
+      "name": "Produtos",
+      "description": "Operações CRUD completas de produtos: listar, consultar por ID, cadastrar, atualizar e remover."
+    },
+    {
+      "name": "Fornecedores",
+      "description": "Operações CRUD completas de fornecedores: listar, consultar por ID, cadastrar, atualizar e remover."
+    },
+    {
+      "name": "Clientes",
+      "description": "Operações básicas de consulta, cadastro e remoção de clientes."
+    },
+    {
+      "name": "Usuários",
+      "description": "Operações básicas de consulta, cadastro e remoção de usuários."
+    }
+  ],
   "paths": {
-    "/v1/api/clientes": {
+    "/api/v1/produtos": {
       "get": {
-        "summary": "Listar Cliente",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "nome_c",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
+        "summary": "Listar produtos",
+        "description": "Retorna produtos cadastrados. Permite filtrar por nome, quantidade em estoque e situação, além de paginação.",
+        "operationId": "listar_produtos",
+        "tags": [
+          "Produtos"
         ],
-        "responses": {
-          "200": {
-            "description": "Lista de recursos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Cliente"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      },
-      "post": {
-        "summary": "Criar Cliente",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Cliente"
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Recurso criado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Cliente"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/clientes/{id_c}": {
-      "delete": {
-        "summary": "Remover Cliente",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id_c",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Recurso removido, sem corpo"
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/produtos/": {
-      "get": {
-        "summary": "Listar Produto",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
         "parameters": [
           {
             "name": "nome_p",
             "in": "query",
-            "description": "",
+            "description": "Filtra produtos cujo nome contenha o texto informado.",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
             }
           },
           {
             "name": "quantidadeEstoque",
             "in": "query",
-            "description": "",
+            "description": "Filtra pela quantidade exata em estoque.",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "status_p",
+            "in": "query",
+            "description": "Filtra pela situação do produto.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ATIVO",
+                "INATIVO"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página, iniciando em 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade máxima de itens por página.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Lista de produtos.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
+                  "description": "Lista de recursos encontrados.",
                   "items": {
                     "$ref": "#/components/schemas/Produto"
                   }
-                }
-              }
-            },
-            "headers": {}
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/produtos": {
-      "post": {
-        "summary": "Cadastrar Produto",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "nome_p": {
-                    "type": "string"
-                  },
-                  "descrição_p": {
-                    "type": "string"
-                  },
-                  "preço_p": {
-                    "type": "number"
-                  },
-                  "quantidadeEstoque": {
-                    "type": "integer"
-                  },
-                  "categoria": {
-                    "type": "string"
-                  },
-                  "status_p": {
-                    "type": "string",
-                    "description": "estado",
-                    "enum": [
-                      "ATIVO",
-                      "INATIVO"
-                    ]
-                  },
-                  "fornecedorId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "data_fabricação": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "data_validade": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
                 },
-                "required": [
-                  "nome_p",
-                  "descrição_p",
-                  "preço_p",
-                  "quantidadeEstoque",
-                  "categoria",
-                  "status_p",
-                  "fornecedorId",
-                  "data_fabricação",
-                  "data_validade"
-                ]
-              },
-              "example": {
-                "nome_p": "tempor fugiat aute",
-                "descrição_p": "Excepteur consectetur est laborum dolore",
-                "preço_p": 53220906.865085274,
-                "quantidadeEstoque": 48750879,
-                "categoria": "laborum commodo",
-                "status_p": "INATIVO",
-                "fornecedorId": "13"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Recurso criado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Produto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/produtos/{id_p}": {
-      "delete": {
-        "summary": "Remover Produto",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id_p",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Recurso removido, sem corpo"
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/usuarios": {
-      "get": {
-        "summary": "Listar Usuario",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "nome_u",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Lista de recursos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UsuarioPublico"
+                "example": [
+                  {
+                    "id_p": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+                    "nome_p": "Café especial torrado 500 g",
+                    "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+                    "preço_p": 39.9,
+                    "quantidadeEstoque": 150,
+                    "categoria": "Alimentos",
+                    "status_p": "ATIVO",
+                    "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                    "data_fabricação": "2026-08-15T08:30:00Z",
+                    "data_validade": "2027-08-15T23:59:59Z"
                   }
-                }
+                ]
               }
             }
           },
           "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
+            "description": "Parâmetros de consulta inválidos.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -559,7 +131,7 @@
             }
           },
           "422": {
-            "description": "Falha de validação",
+            "description": "Falha de validação dos parâmetros.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -572,55 +144,48 @@
         "security": []
       },
       "post": {
-        "summary": "Cadastrar Usuario",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
+        "summary": "Criar produto",
+        "description": "Cadastra um produto. O id_p é gerado pelo servidor e fornecedorId deve identificar um fornecedor existente.",
+        "operationId": "criar_produto",
+        "tags": [
+          "Produtos"
+        ],
         "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Usuario"
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
         "responses": {
           "201": {
-            "description": "Recurso criado",
+            "description": "Produto criado.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioPublico"
+                  "$ref": "#/components/schemas/Produto"
+                },
+                "example": {
+                  "id_p": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+                  "nome_p": "Café especial torrado 500 g",
+                  "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+                  "preço_p": 39.9,
+                  "quantidadeEstoque": 150,
+                  "categoria": "Alimentos",
+                  "status_p": "ATIVO",
+                  "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "data_fabricação": "2026-08-15T08:30:00Z",
+                  "data_validade": "2027-08-15T23:59:59Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso recém-criado.",
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "/api/v1/produtos/{id_p}"
                 }
               }
             }
           },
           "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
+            "description": "Requisição inválida.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -630,52 +195,7 @@
             }
           },
           "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/api/usuarios/{id_u}": {
-      "delete": {
-        "summary": "Remover Usuario",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id_u",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Recurso removido, sem corpo"
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
+            "description": "Falha de validação dos dados do produto.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -685,17 +205,7 @@
             }
           },
           "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
+            "description": "Conflito de integridade ou duplicidade, quando aplicável.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -705,81 +215,77 @@
             }
           }
         },
+        "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProdutoDTO"
+              },
+              "example": {
+                "nome_p": "Café especial torrado 500 g",
+                "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+                "preço_p": 39.9,
+                "quantidadeEstoque": 150,
+                "categoria": "Alimentos",
+                "status_p": "ATIVO",
+                "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                "data_fabricação": "2026-08-15T08:30:00Z",
+                "data_validade": "2027-08-15T23:59:59Z"
+              }
+            }
+          }
+        },
         "security": []
       }
     },
-    "/v1/api/fornecedores/{nome_f}": {
+    "/api/v1/produtos/{id_p}": {
       "get": {
-        "summary": "Listar Fornecedor",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
+        "summary": "Buscar produto por ID",
+        "description": "Retorna os dados de um produto específico identificado por UUID.",
+        "operationId": "buscar_produto_por_id",
+        "tags": [
+          "Produtos"
+        ],
         "parameters": [
           {
-            "name": "nome_f",
+            "name": "id_p",
             "in": "path",
-            "description": "",
+            "description": "UUID do produto.",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "nome_f",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Fornecedores encontrados",
+            "description": "Operação realizada com sucesso.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Fornecedor"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
+                  "$ref": "#/components/schemas/Produto"
+                },
+                "example": {
+                  "id_p": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+                  "nome_p": "Café especial torrado 500 g",
+                  "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+                  "preço_p": 39.9,
+                  "quantidadeEstoque": 150,
+                  "categoria": "Alimentos",
+                  "status_p": "ATIVO",
+                  "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "data_fabricação": "2026-08-15T08:30:00Z",
+                  "data_validade": "2027-08-15T23:59:59Z"
                 }
               }
             }
           },
           "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
+            "description": "Recurso não encontrado.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -790,114 +296,114 @@
           }
         },
         "security": []
-      }
-    },
-    "/v1/api/fornecedores": {
-      "post": {
-        "summary": "Cadastrar Fornecedor",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
+      },
+      "patch": {
+        "summary": "Atualizar produto parcialmente",
+        "description": "Atualiza somente os campos enviados no corpo da requisição. Campos omitidos permanecem inalterados.",
+        "operationId": "atualizar_produto_parcialmente",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "id_p",
+            "in": "path",
+            "description": "UUID do produto.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto atualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Produto"
+                },
+                "example": {
+                  "id_p": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+                  "nome_p": "Café especial torrado 500 g",
+                  "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+                  "preço_p": 42.5,
+                  "quantidadeEstoque": 180,
+                  "categoria": "Alimentos",
+                  "status_p": "ATIVO",
+                  "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "data_fabricação": "2026-08-15T08:30:00Z",
+                  "data_validade": "2027-08-15T23:59:59Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Um ou mais campos não passaram pela validação.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Fornecedor"
+                "$ref": "#/components/schemas/UpdateProdutoDTO"
               },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Recurso criado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Fornecedor"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflito de recurso",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Falha de validação",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
+              "example": {
+                "preço_p": 42.5,
+                "quantidadeEstoque": 180
               }
             }
           }
         },
         "security": []
-      }
-    },
-    "/v1/api/fornecedores/{id_f}": {
+      },
       "delete": {
-        "summary": "Remover Fornecedor",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
+        "summary": "Remover produto",
+        "description": "Remove o produto identificado pelo UUID. A resposta de sucesso não contém corpo.",
+        "operationId": "remover_produto",
+        "tags": [
+          "Produtos"
+        ],
         "parameters": [
           {
-            "name": "id_f",
+            "name": "id_p",
             "in": "path",
-            "description": "",
+            "description": "UUID do produto.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Recurso removido, sem corpo"
-          },
-          "400": {
-            "description": "Requisição inválida",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
+            "description": "Recurso removido com sucesso. A resposta não possui corpo."
           },
           "404": {
-            "description": "Recurso não encontrado",
+            "description": "Recurso não encontrado.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -907,7 +413,131 @@
             }
           },
           "409": {
-            "description": "Conflito de recurso",
+            "description": "Não foi possível remover o recurso devido a uma referência ou restrição de integridade.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/fornecedores": {
+      "get": {
+        "summary": "Listar fornecedores",
+        "description": "Retorna fornecedores cadastrados. Permite filtrar por razão social, nome fantasia, CNPJ e situação, além de paginação.",
+        "operationId": "listar_fornecedores",
+        "tags": [
+          "Fornecedores"
+        ],
+        "parameters": [
+          {
+            "name": "razaoSocial_f",
+            "in": "query",
+            "description": "Filtra pela razão social ou parte dela.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            }
+          },
+          {
+            "name": "nomeFantasia_f",
+            "in": "query",
+            "description": "Filtra pelo nome fantasia ou parte dele.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "cnpj",
+            "in": "query",
+            "description": "Filtra pelo CNPJ do fornecedor.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filtra pela situação cadastral.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ATIVO",
+                "INATIVO"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página, iniciando em 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade máxima de itens por página.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de fornecedores.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Lista de recursos encontrados.",
+                  "items": {
+                    "$ref": "#/components/schemas/Fornecedor"
+                  }
+                },
+                "example": [
+                  {
+                    "id_f": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                    "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+                    "nomeFantasia_f": "Mantiqueira Cafés",
+                    "cnpj": "12.345.678/0001-90",
+                    "email_f": "contato@mantiqueiracafes.com.br",
+                    "telefone_f": "+55 35 3333-2222",
+                    "endereco_f": "Rua das Palmeiras, 250",
+                    "cidade": "Ribeirão Preto",
+                    "estado": "SP",
+                    "cep": "14020-250",
+                    "status": "ATIVO",
+                    "createdAT": "2026-08-20T12:00:00Z",
+                    "modifiedAT": "2026-08-20T12:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros de consulta inválidos.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -917,7 +547,738 @@
             }
           },
           "422": {
-            "description": "Falha de validação",
+            "description": "Falha de validação dos parâmetros.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Criar fornecedor",
+        "description": "Cadastra um fornecedor. O identificador e as datas de auditoria são gerados pelo servidor.",
+        "operationId": "criar_fornecedor",
+        "tags": [
+          "Fornecedores"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Fornecedor criado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fornecedor"
+                },
+                "example": {
+                  "id_f": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+                  "nomeFantasia_f": "Mantiqueira Cafés",
+                  "cnpj": "12.345.678/0001-90",
+                  "email_f": "contato@mantiqueiracafes.com.br",
+                  "telefone_f": "+55 35 3333-2222",
+                  "endereco_f": "Rua das Palmeiras, 250",
+                  "cidade": "Ribeirão Preto",
+                  "estado": "SP",
+                  "cep": "14020-250",
+                  "status": "ATIVO",
+                  "createdAT": "2026-08-20T12:00:00Z",
+                  "modifiedAT": "2026-08-20T12:00:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso recém-criado.",
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "/api/v1/fornecedores/{id_f}"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação dos dados do fornecedor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de integridade ou duplicidade, quando aplicável.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFornecedorDTO"
+              },
+              "example": {
+                "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+                "nomeFantasia_f": "Mantiqueira Cafés",
+                "cnpj": "12.345.678/0001-90",
+                "email_f": "contato@mantiqueiracafes.com.br",
+                "telefone_f": "+55 35 3333-2222",
+                "endereco_f": "Rua das Palmeiras, 250",
+                "cidade": "Ribeirão Preto",
+                "estado": "SP",
+                "cep": "14020-250",
+                "status": "ATIVO"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/fornecedores/{id_f}": {
+      "get": {
+        "summary": "Buscar fornecedor por ID",
+        "description": "Retorna os dados de um fornecedor específico identificado por UUID.",
+        "operationId": "buscar_fornecedor_por_id",
+        "tags": [
+          "Fornecedores"
+        ],
+        "parameters": [
+          {
+            "name": "id_f",
+            "in": "path",
+            "description": "UUID do fornecedor.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fornecedor"
+                },
+                "example": {
+                  "id_f": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+                  "nomeFantasia_f": "Mantiqueira Cafés",
+                  "cnpj": "12.345.678/0001-90",
+                  "email_f": "contato@mantiqueiracafes.com.br",
+                  "telefone_f": "+55 35 3333-2222",
+                  "endereco_f": "Rua das Palmeiras, 250",
+                  "cidade": "Ribeirão Preto",
+                  "estado": "SP",
+                  "cep": "14020-250",
+                  "status": "ATIVO",
+                  "createdAT": "2026-08-20T12:00:00Z",
+                  "modifiedAT": "2026-08-20T12:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "patch": {
+        "summary": "Atualizar fornecedor parcialmente",
+        "description": "Atualiza somente os campos enviados no corpo da requisição. Campos omitidos permanecem inalterados; modifiedAT é atualizado pelo servidor.",
+        "operationId": "atualizar_fornecedor_parcialmente",
+        "tags": [
+          "Fornecedores"
+        ],
+        "parameters": [
+          {
+            "name": "id_f",
+            "in": "path",
+            "description": "UUID do fornecedor.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fornecedor atualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fornecedor"
+                },
+                "example": {
+                  "id_f": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+                  "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+                  "nomeFantasia_f": "Mantiqueira Cafés",
+                  "cnpj": "12.345.678/0001-90",
+                  "email_f": "contato@mantiqueiracafes.com.br",
+                  "telefone_f": "+55 35 3333-9999",
+                  "endereco_f": "Rua das Palmeiras, 250",
+                  "cidade": "Ribeirão Preto",
+                  "estado": "SP",
+                  "cep": "14020-250",
+                  "status": "INATIVO",
+                  "createdAT": "2026-08-20T12:00:00Z",
+                  "modifiedAT": "2026-08-21T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Um ou mais campos não passaram pela validação.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
+          "content": {
+9            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFornecedorDTO"
+              },
+              "example": {
+                "telefone_f": "+55 35 3333-9999",
+                "status": "INATIVO"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Remover fornecedor",
+        "description": "Remove o fornecedor identificado pelo UUID. Se houver produtos vinculados, a operação pode retornar conflito de integridade (409).",
+        "operationId": "remover_fornecedor",
+        "tags": [
+          "Fornecedores"
+        ],
+        "parameters": [
+          {
+            "name": "id_f",
+            "in": "path",
+            "description": "UUID do fornecedor.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido com sucesso. A resposta não possui corpo."
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Não foi possível remover o recurso devido a uma referência ou restrição de integridade.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/clientes": {
+      "get": {
+        "summary": "Listar clientes",
+        "description": "Retorna clientes cadastrados, com filtro opcional por nome.",
+        "operationId": "listar_clientes",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [
+          {
+            "name": "nome_c",
+            "in": "query",
+            "description": "Filtra clientes pelo nome ou parte dele.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página, iniciando em 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade máxima de itens por página.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Lista de recursos encontrados.",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                },
+                "example": [
+                  {
+                    "id_c": "6d4b2a91-8c7e-4f30-a1b5-9e2d6c8f4a70",
+                    "nome_c": "Mariana Oliveira",
+                    "email_c": "mariana.oliveira@example.com",
+                    "telefone_c": "+55 16 99999-1234",
+                    "status_c": "ATIVO"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros de consulta inválidos.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação dos parâmetros.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Criar cliente",
+        "description": "Cadastra um cliente. O identificador é gerado pelo servidor.",
+        "operationId": "criar_cliente",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Cliente criado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                },
+                "example": {
+                  "id_c": "6d4b2a91-8c7e-4f30-a1b5-9e2d6c8f4a70",
+                  "nome_c": "Mariana Oliveira",
+                  "email_c": "mariana.oliveira@example.com",
+                  "telefone_c": "+55 16 99999-1234",
+                  "status_c": "ATIVO"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso recém-criado.",
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "/api/v1/clientes/{id_c}"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Corpo da requisição inválido ou malformado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Um ou mais campos não passaram pela validação.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClienteDTO"
+              },
+              "example": {
+                "nome_c": "Mariana Oliveira",
+                "email_c": "mariana.oliveira@example.com",
+                "telefone_c": "+55 16 99999-1234",
+                "status_c": "ATIVO"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/clientes/{id_c}": {
+      "delete": {
+        "summary": "Remover cliente",
+        "description": "Remove o cliente identificado pelo UUID.",
+        "operationId": "remover_cliente",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [
+          {
+            "name": "id_c",
+            "in": "path",
+            "description": "UUID do cliente.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido com sucesso. A resposta não possui corpo."
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Não foi possível remover o recurso devido a uma referência ou restrição de integridade.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/usuarios": {
+      "get": {
+        "summary": "Listar usuários",
+        "description": "Retorna usuários cadastrados sem expor senha. Permite filtro opcional por nome.",
+        "operationId": "listar_usuarios",
+        "tags": [
+          "Usuários"
+        ],
+        "parameters": [
+          {
+            "name": "nome_u",
+            "in": "query",
+            "description": "Filtra usuários pelo nome ou parte dele.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página, iniciando em 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade máxima de itens por página.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários sem dados de senha.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Lista de recursos encontrados.",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioPublico"
+                  }
+                },
+                "example": [
+                  {
+                    "id_u": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+                    "nome_u": "Carlos Henrique Souza",
+                    "email_u": "carlos.souza@example.com",
+                    "telefone_u": "+55 16 98888-7766",
+                    "status_u": "ATIVO",
+                    "createdAt_u": "2026-08-20T12:00:00Z",
+                    "updateAt_u": "2026-08-20T12:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros de consulta inválidos.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Falha de validação dos parâmetros.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Criar usuário",
+        "description": "Cadastra um usuário. A senha é aceita somente na entrada e nunca é incluída na resposta.",
+        "operationId": "criar_usuario",
+        "tags": [
+          "Usuários"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Usuário criado sem exposição da senha.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioPublico"
+                },
+                "example": {
+                  "id_u": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+                  "nome_u": "Carlos Henrique Souza",
+                  "email_u": "carlos.souza@example.com",
+                  "telefone_u": "+55 16 98888-7766",
+                  "status_u": "ATIVO",
+                  "createdAt_u": "2026-08-20T12:00:00Z",
+                  "updateAt_u": "2026-08-20T12:00:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso recém-criado.",
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "/api/v1/usuarios/{id_u}"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Corpo da requisição inválido ou malformado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Um ou mais campos não passaram pela validação.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Corpo JSON validado pelo schema reutilizável indicado.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioDTO"
+              },
+              "example": {
+                "nome_u": "Carlos Henrique Souza",
+                "email_u": "carlos.souza@example.com",
+                "senha_u": "SenhaForte#2026",
+                "telefone_u": "+55 16 98888-7766",
+                "status_u": "ATIVO"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/usuarios/{id_u}": {
+      "delete": {
+        "summary": "Remover usuário",
+        "description": "Remove o usuário identificado pelo UUID.",
+        "operationId": "remover_usuario",
+        "tags": [
+          "Usuários"
+        ],
+        "parameters": [
+          {
+            "name": "id_u",
+            "in": "path",
+            "description": "UUID do usuário.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recurso removido com sucesso. A resposta não possui corpo."
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Não foi possível remover o recurso devido a uma referência ou restrição de integridade.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -933,46 +1294,887 @@
   },
   "components": {
     "schemas": {
+      "Produto": {
+        "type": "object",
+        "description": "Representação completa de um produto cadastrada no sistema.",
+        "properties": {
+          "id_p": {
+            "type": "string",
+            "description": "Identificador único do produto, gerado pelo servidor.",
+            "format": "uuid",
+            "example": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "nome_p": {
+            "type": "string",
+            "description": "Nome comercial do produto.",
+            "example": "Café especial torrado 500 g",
+            "minLength": 3,
+            "maxLength": 120,
+            "x-apidog-mock": "{{$commerce.productName}}",
+            "nullable": false
+          },
+          "descrição_p": {
+            "type": "string",
+            "description": "Descrição complementar do produto, incluindo características relevantes.",
+            "example": "Café arábica especial, torra média, embalagem de 500 g.",
+            "maxLength": 1000,
+            "x-apidog-mock": "{{$lorem.sentence}}",
+            "nullable": false
+          },
+          "preço_p": {
+            "type": "number",
+            "description": "Preço unitário de venda em reais (BRL). Deve ser maior ou igual a zero.",
+            "example": 39.9,
+            "minimum": 0,
+            "maximum": 999999999.99,
+            "multipleOf": 0.01,
+            "x-apidog-mock": "{{$number.float(min=1,max=5000,precision=2)}}",
+            "nullable": false
+          },
+          "quantidadeEstoque": {
+            "type": "integer",
+            "description": "Quantidade de unidades disponíveis em estoque.",
+            "example": 150,
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-apidog-mock": "{{$number.int(min=0,max=10000)}}",
+            "nullable": false
+          },
+          "categoria": {
+            "type": "string",
+            "description": "Categoria comercial utilizada para classificar o produto.",
+            "example": "Alimentos",
+            "minLength": 2,
+            "maxLength": 60,
+            "x-apidog-mock": "{{$commerce.department}}",
+            "nullable": false
+          },
+          "status_p": {
+            "type": "string",
+            "description": "Situação cadastral do produto.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          },
+          "fornecedorId": {
+            "type": "string",
+            "description": "Identificador UUID do fornecedor responsável pelo fornecimento do produto.",
+            "format": "uuid",
+            "example": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "data_fabricação": {
+            "type": "string",
+            "description": "Data e hora de fabricação do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2026-08-15T08:30:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "data_validade": {
+            "type": "string",
+            "description": "Data e hora limite de validade do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2027-08-15T23:59:59Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "required": [
+          "id_p",
+          "nome_p",
+          "descrição_p",
+          "preço_p",
+          "quantidadeEstoque",
+          "categoria",
+          "status_p",
+          "fornecedorId",
+          "data_fabricação",
+          "data_validade"
+        ],
+        "example": {
+          "id_p": "2f1c7e8a-6d4b-4a91-9c20-7b5e3d8a1f60",
+          "nome_p": "Café especial torrado 500 g",
+          "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+          "preço_p": 39.9,
+          "quantidadeEstoque": 150,
+          "categoria": "Alimentos",
+          "status_p": "ATIVO",
+          "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+          "data_fabricação": "2026-08-15T08:30:00Z",
+          "data_validade": "2027-08-15T23:59:59Z"
+        },
+        "additionalProperties": false
+      },
+      "CreateProdutoDTO": {
+        "type": "object",
+        "description": "Dados necessários para cadastrar um produto. O identificador é gerado pelo servidor.",
+        "properties": {
+          "nome_p": {
+            "type": "string",
+            "description": "Nome comercial do produto.",
+            "example": "Café especial torrado 500 g",
+            "minLength": 3,
+            "maxLength": 120,
+            "x-apidog-mock": "{{$commerce.productName}}",
+            "nullable": false
+          },
+          "descrição_p": {
+            "type": "string",
+            "description": "Descrição complementar do produto, incluindo características relevantes.",
+            "example": "Café arábica especial, torra média, embalagem de 500 g.",
+            "maxLength": 1000,
+            "x-apidog-mock": "{{$lorem.sentence}}",
+            "nullable": false
+          },
+          "preço_p": {
+            "type": "number",
+            "description": "Preço unitário de venda em reais (BRL). Deve ser maior ou igual a zero.",
+            "example": 39.9,
+            "minimum": 0,
+            "maximum": 999999999.99,
+            "multipleOf": 0.01,
+            "x-apidog-mock": "{{$number.float(min=1,max=5000,precision=2)}}",
+            "nullable": false
+          },
+          "quantidadeEstoque": {
+            "type": "integer",
+            "description": "Quantidade de unidades disponíveis em estoque.",
+            "example": 150,
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-apidog-mock": "{{$number.int(min=0,max=10000)}}",
+            "nullable": false
+          },
+          "categoria": {
+            "type": "string",
+            "description": "Categoria comercial utilizada para classificar o produto.",
+            "example": "Alimentos",
+            "minLength": 2,
+            "maxLength": 60,
+            "x-apidog-mock": "{{$commerce.department}}",
+            "nullable": false
+          },
+          "status_p": {
+            "type": "string",
+            "description": "Situação cadastral do produto.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          },
+          "fornecedorId": {
+            "type": "string",
+            "description": "Identificador UUID do fornecedor responsável pelo fornecimento do produto.",
+            "format": "uuid",
+            "example": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "data_fabricação": {
+            "type": "string",
+            "description": "Data e hora de fabricação do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2026-08-15T08:30:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "data_validade": {
+            "type": "string",
+            "description": "Data e hora limite de validade do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2027-08-15T23:59:59Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "required": [
+          "nome_p",
+          "descrição_p",
+          "preço_p",
+          "quantidadeEstoque",
+          "categoria",
+          "status_p",
+          "fornecedorId",
+          "data_fabricação",
+          "data_validade"
+        ],
+        "example": {
+          "nome_p": "Café especial torrado 500 g",
+          "descrição_p": "Café arábica especial, torra média, embalagem de 500 g.",
+          "preço_p": 39.9,
+          "quantidadeEstoque": 150,
+          "categoria": "Alimentos",
+          "status_p": "ATIVO",
+          "fornecedorId": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+          "data_fabricação": "2026-08-15T08:30:00Z",
+          "data_validade": "2027-08-15T23:59:59Z"
+        },
+        "additionalProperties": false
+      },
+      "UpdateProdutoDTO": {
+        "type": "object",
+        "description": "Campos opcionais para atualização parcial de um produto por PATCH. Envie somente os campos que deseja alterar.",
+        "properties": {
+          "nome_p": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Nome comercial do produto.",
+            "example": "Café especial torrado 500 g",
+            "minLength": 3,
+            "maxLength": 120,
+            "x-apidog-mock": "{{$commerce.productName}}",
+            "nullable": false
+          },
+          "descrição_p": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Descrição complementar do produto, incluindo características relevantes.",
+            "example": "Café arábica especial, torra média, embalagem de 500 g.",
+            "maxLength": 1000,
+            "x-apidog-mock": "{{$lorem.sentence}}",
+            "nullable": false
+          },
+          "preço_p": {
+            "type": "number",
+            "description": "Campo opcional para atualização parcial. Preço unitário de venda em reais (BRL). Deve ser maior ou igual a zero.",
+            "example": 39.9,
+            "minimum": 0,
+            "maximum": 999999999.99,
+            "multipleOf": 0.01,
+            "x-apidog-mock": "{{$number.float(min=1,max=5000,precision=2)}}",
+            "nullable": false
+          },
+          "quantidadeEstoque": {
+            "type": "integer",
+            "description": "Campo opcional para atualização parcial. Quantidade de unidades disponíveis em estoque.",
+            "example": 150,
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-apidog-mock": "{{$number.int(min=0,max=10000)}}",
+            "nullable": false
+          },
+          "categoria": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Categoria comercial utilizada para classificar o produto.",
+            "example": "Alimentos",
+            "minLength": 2,
+            "maxLength": 60,
+            "x-apidog-mock": "{{$commerce.department}}",
+            "nullable": false
+          },
+          "status_p": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Situação cadastral do produto.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          },
+          "fornecedorId": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Identificador UUID do fornecedor responsável pelo fornecimento do produto.",
+            "format": "uuid",
+            "example": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "data_fabricação": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Data e hora de fabricação do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2026-08-15T08:30:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "data_validade": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Data e hora limite de validade do produto, em formato ISO 8601.",
+            "format": "date-time",
+            "example": "2027-08-15T23:59:59Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "minProperties": 1,
+        "additionalProperties": false
+      },
+      "Fornecedor": {
+        "type": "object",
+        "description": "Representação completa de um fornecedor.",
+        "properties": {
+          "id_f": {
+            "type": "string",
+            "description": "Identificador único do fornecedor, gerado pelo servidor.",
+            "format": "uuid",
+            "example": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "razaoSocial_f": {
+            "type": "string",
+            "description": "Razão social registrada do fornecedor.",
+            "example": "Café Mantiqueira Comércio de Alimentos Ltda.",
+            "minLength": 3,
+            "maxLength": 150,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "nomeFantasia_f": {
+            "type": "string",
+            "description": "Nome fantasia utilizado comercialmente pelo fornecedor.",
+            "example": "Mantiqueira Cafés",
+            "minLength": 3,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "CNPJ do fornecedor. Aceita o formato com ou sem pontuação.",
+            "example": "12.345.678/0001-90",
+            "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$",
+            "minLength": 14,
+            "maxLength": 18,
+            "nullable": false
+          },
+          "email_f": {
+            "type": "string",
+            "description": "E-mail principal para contato com o fornecedor.",
+            "format": "email",
+            "example": "contato@mantiqueiracafes.com.br",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_f": {
+            "type": "string",
+            "description": "Telefone de contato do fornecedor, preferencialmente com DDD.",
+            "example": "+55 35 3333-2222",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "endereco_f": {
+            "type": "string",
+            "description": "Logradouro, número e complemento do endereço do fornecedor.",
+            "example": "Rua das Palmeiras, 250",
+            "minLength": 5,
+            "maxLength": 200,
+            "x-apidog-mock": "{{$location.streetAddress}}",
+            "nullable": false
+          },
+          "cidade": {
+            "type": "string",
+            "description": "Município onde o fornecedor está estabelecido.",
+            "example": "Ribeirão Preto",
+            "minLength": 2,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$location.city}}",
+            "nullable": false
+          },
+          "estado": {
+            "type": "string",
+            "description": "Sigla da unidade federativa brasileira.",
+            "example": "SP",
+            "pattern": "^[A-Z]{2}$",
+            "minLength": 2,
+            "maxLength": 2,
+            "nullable": false
+          },
+          "cep": {
+            "type": "string",
+            "description": "Código de Endereçamento Postal brasileiro, com ou sem hífen.",
+            "example": "14020-250",
+            "pattern": "^\\d{5}-?\\d{3}$",
+            "minLength": 8,
+            "maxLength": 9,
+            "nullable": false
+          },
+          "status": {
+            "type": "string",
+            "description": "Situação cadastral do fornecedor.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          },
+          "createdAT": {
+            "type": "string",
+            "description": "Data e hora em que o registro foi criado pelo servidor.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "modifiedAT": {
+            "type": "string",
+            "description": "Data e hora da última modificação do registro.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "required": [
+          "id_f",
+          "razaoSocial_f",
+          "nomeFantasia_f",
+          "cnpj",
+          "email_f",
+          "telefone_f",
+          "endereco_f",
+          "cidade",
+          "estado",
+          "cep",
+          "status",
+          "createdAT",
+          "modifiedAT"
+        ],
+        "example": {
+          "id_f": "a8d5b6c1-9e2f-4a73-8b10-6c4d2e9f7a51",
+          "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+          "nomeFantasia_f": "Mantiqueira Cafés",
+          "cnpj": "12.345.678/0001-90",
+          "email_f": "contato@mantiqueiracafes.com.br",
+          "telefone_f": "+55 35 3333-2222",
+          "endereco_f": "Rua das Palmeiras, 250",
+          "cidade": "Ribeirão Preto",
+          "estado": "SP",
+          "cep": "14020-250",
+          "status": "ATIVO",
+          "createdAT": "2026-08-20T12:00:00Z",
+          "modifiedAT": "2026-08-20T12:00:00Z"
+        },
+        "additionalProperties": false
+      },
+      "CreateFornecedorDTO": {
+        "type": "object",
+        "description": "Dados necessários para cadastrar um fornecedor. Identificador e datas de auditoria são gerados pelo servidor.",
+        "properties": {
+          "razaoSocial_f": {
+            "type": "string",
+            "description": "Razão social registrada do fornecedor.",
+            "example": "Café Mantiqueira Comércio de Alimentos Ltda.",
+            "minLength": 3,
+            "maxLength": 150,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "nomeFantasia_f": {
+            "type": "string",
+            "description": "Nome fantasia utilizado comercialmente pelo fornecedor.",
+            "example": "Mantiqueira Cafés",
+            "minLength": 3,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "CNPJ do fornecedor. Aceita o formato com ou sem pontuação.",
+            "example": "12.345.678/0001-90",
+            "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$",
+            "minLength": 14,
+            "maxLength": 18,
+            "nullable": false
+          },
+          "email_f": {
+            "type": "string",
+            "description": "E-mail principal para contato com o fornecedor.",
+            "format": "email",
+            "example": "contato@mantiqueiracafes.com.br",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_f": {
+            "type": "string",
+            "description": "Telefone de contato do fornecedor, preferencialmente com DDD.",
+            "example": "+55 35 3333-2222",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "endereco_f": {
+            "type": "string",
+            "description": "Logradouro, número e complemento do endereço do fornecedor.",
+            "example": "Rua das Palmeiras, 250",
+            "minLength": 5,
+            "maxLength": 200,
+            "x-apidog-mock": "{{$location.streetAddress}}",
+            "nullable": false
+          },
+          "cidade": {
+            "type": "string",
+            "description": "Município onde o fornecedor está estabelecido.",
+            "example": "Ribeirão Preto",
+            "minLength": 2,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$location.city}}",
+            "nullable": false
+          },
+          "estado": {
+            "type": "string",
+            "description": "Sigla da unidade federativa brasileira.",
+            "example": "SP",
+            "pattern": "^[A-Z]{2}$",
+            "minLength": 2,
+            "maxLength": 2,
+            "nullable": false
+          },
+          "cep": {
+            "type": "string",
+            "description": "Código de Endereçamento Postal brasileiro, com ou sem hífen.",
+            "example": "14020-250",
+            "pattern": "^\\d{5}-?\\d{3}$",
+            "minLength": 8,
+            "maxLength": 9,
+            "nullable": false
+          },
+          "status": {
+            "type": "string",
+            "description": "Situação cadastral do fornecedor.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          }
+        },
+        "required": [
+          "razaoSocial_f",
+          "nomeFantasia_f",
+          "cnpj",
+          "email_f",
+          "telefone_f",
+          "endereco_f",
+          "cidade",
+          "estado",
+          "cep",
+          "status"
+        ],
+        "example": {
+          "razaoSocial_f": "Café Mantiqueira Comércio de Alimentos Ltda.",
+          "nomeFantasia_f": "Mantiqueira Cafés",
+          "cnpj": "12.345.678/0001-90",
+          "email_f": "contato@mantiqueiracafes.com.br",
+          "telefone_f": "+55 35 3333-2222",
+          "endereco_f": "Rua das Palmeiras, 250",
+          "cidade": "Ribeirão Preto",
+          "estado": "SP",
+          "cep": "14020-250",
+          "status": "ATIVO"
+        },
+        "additionalProperties": false
+      },
+      "UpdateFornecedorDTO": {
+        "type": "object",
+        "description": "Campos opcionais para atualização parcial de um fornecedor por PATCH. Envie somente os campos que deseja alterar.",
+        "properties": {
+          "razaoSocial_f": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Razão social registrada do fornecedor.",
+            "example": "Café Mantiqueira Comércio de Alimentos Ltda.",
+            "minLength": 3,
+            "maxLength": 150,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "nomeFantasia_f": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Nome fantasia utilizado comercialmente pelo fornecedor.",
+            "example": "Mantiqueira Cafés",
+            "minLength": 3,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$company.name}}",
+            "nullable": false
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. CNPJ do fornecedor. Aceita o formato com ou sem pontuação.",
+            "example": "12.345.678/0001-90",
+            "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$",
+            "minLength": 14,
+            "maxLength": 18,
+            "nullable": false
+          },
+          "email_f": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. E-mail principal para contato com o fornecedor.",
+            "format": "email",
+            "example": "contato@mantiqueiracafes.com.br",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_f": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Telefone de contato do fornecedor, preferencialmente com DDD.",
+            "example": "+55 35 3333-2222",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "endereco_f": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Logradouro, número e complemento do endereço do fornecedor.",
+            "example": "Rua das Palmeiras, 250",
+            "minLength": 5,
+            "maxLength": 200,
+            "x-apidog-mock": "{{$location.streetAddress}}",
+            "nullable": false
+          },
+          "cidade": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Município onde o fornecedor está estabelecido.",
+            "example": "Ribeirão Preto",
+            "minLength": 2,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$location.city}}",
+            "nullable": false
+          },
+          "estado": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Sigla da unidade federativa brasileira.",
+            "example": "SP",
+            "pattern": "^[A-Z]{2}$",
+            "minLength": 2,
+            "maxLength": 2,
+            "nullable": false
+          },
+          "cep": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Código de Endereçamento Postal brasileiro, com ou sem hífen.",
+            "example": "14020-250",
+            "pattern": "^\\d{5}-?\\d{3}$",
+            "minLength": 8,
+            "maxLength": 9,
+            "nullable": false
+          },
+          "status": {
+            "type": "string",
+            "description": "Campo opcional para atualização parcial. Situação cadastral do fornecedor.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          }
+        },
+        "minProperties": 1,
+        "additionalProperties": false
+      },
+      "Cliente": {
+        "type": "object",
+        "description": "Representação completa de um cliente.",
+        "properties": {
+          "id_c": {
+            "type": "string",
+            "description": "Identificador único do cliente.",
+            "format": "uuid",
+            "example": "6d4b2a91-8c7e-4f30-a1b5-9e2d6c8f4a70",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "nome_c": {
+            "type": "string",
+            "description": "Nome completo ou razão de identificação do cliente.",
+            "example": "Mariana Oliveira",
+            "minLength": 3,
+            "maxLength": 120,
+            "x-apidog-mock": "{{$person.fullName}}",
+            "nullable": false
+          },
+          "email_c": {
+            "type": "string",
+            "description": "Endereço de e-mail para contato com o cliente.",
+            "format": "email",
+            "example": "mariana.oliveira@example.com",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_c": {
+            "type": "string",
+            "description": "Telefone de contato do cliente, com DDD.",
+            "example": "+55 16 99999-1234",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "status_c": {
+            "type": "string",
+            "description": "Situação cadastral do cliente.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          }
+        },
+        "required": [
+          "id_c",
+          "nome_c",
+          "email_c",
+          "telefone_c",
+          "status_c"
+        ],
+        "example": {
+          "id_c": "6d4b2a91-8c7e-4f30-a1b5-9e2d6c8f4a70",
+          "nome_c": "Mariana Oliveira",
+          "email_c": "mariana.oliveira@example.com",
+          "telefone_c": "+55 16 99999-1234",
+          "status_c": "ATIVO"
+        },
+        "additionalProperties": false
+      },
+      "CreateClienteDTO": {
+        "type": "object",
+        "description": "Dados para cadastro de cliente; o identificador é gerado pelo servidor.",
+        "properties": {
+          "nome_c": {
+            "type": "string",
+            "description": "Nome completo ou razão de identificação do cliente.",
+            "example": "Mariana Oliveira",
+            "minLength": 3,
+            "maxLength": 120,
+            "x-apidog-mock": "{{$person.fullName}}",
+            "nullable": false
+          },
+          "email_c": {
+            "type": "string",
+            "description": "Endereço de e-mail para contato com o cliente.",
+            "format": "email",
+            "example": "mariana.oliveira@example.com",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_c": {
+            "type": "string",
+            "description": "Telefone de contato do cliente, com DDD.",
+            "example": "+55 16 99999-1234",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "status_c": {
+            "type": "string",
+            "description": "Situação cadastral do cliente.",
+            "example": "ATIVO",
+            "enum": [
+              "ATIVO",
+              "INATIVO"
+            ],
+            "nullable": false
+          }
+        },
+        "required": [
+          "nome_c",
+          "email_c",
+          "telefone_c",
+          "status_c"
+        ],
+        "example": {
+          "nome_c": "Mariana Oliveira",
+          "email_c": "mariana.oliveira@example.com",
+          "telefone_c": "+55 16 99999-1234",
+          "status_c": "ATIVO"
+        },
+        "additionalProperties": false
+      },
       "Usuario": {
         "type": "object",
+        "description": "Modelo completo de dados do usuário para referência interna; senha writeOnly e nunca retornada pela API.",
         "properties": {
           "id_u": {
             "type": "string",
-            "format": "uuid"
+            "description": "Identificador único do usuário.",
+            "format": "uuid",
+            "example": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
           },
           "nome_u": {
             "type": "string",
+            "description": "Nome completo do usuário.",
+            "example": "Carlos Henrique Souza",
             "minLength": 3,
-            "maxLength": 100
+            "maxLength": 100,
+            "x-apidog-mock": "{{$person.fullName}}",
+            "nullable": false
           },
           "email_u": {
             "type": "string",
-            "format": "email"
+            "description": "E-mail utilizado para identificação do usuário.",
+            "format": "email",
+            "example": "carlos.souza@example.com",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
           },
           "senha_u": {
             "type": "string",
-            "minLength": 6,
-            "maxLength": 100
+            "description": "Senha informada no cadastro. Nunca deve ser retornada em respostas; armazenar somente versão protegida/hash.",
+            "example": "SenhaForte#2026",
+            "minLength": 8,
+            "maxLength": 100,
+            "writeOnly": true,
+            "nullable": false
           },
           "telefone_u": {
             "type": "string",
-            "maxLength": 20
+            "description": "Telefone de contato do usuário.",
+            "example": "+55 16 98888-7766",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
           },
           "status_u": {
             "type": "string",
-            "description": "estado",
+            "description": "Situação de acesso do usuário.",
+            "example": "ATIVO",
             "enum": [
               "INATIVO",
               "ATIVO"
-            ]
+            ],
+            "nullable": false
           },
           "createdAt_u": {
             "type": "string",
-            "format": "date-time"
+            "description": "Data e hora de criação do cadastro, gerada pelo servidor.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
           },
           "updateAt_u": {
             "type": "string",
-            "format": "date-time"
+            "description": "Data e hora da última atualização do cadastro.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
           }
         },
         "required": [
@@ -984,206 +2186,150 @@
           "status_u",
           "createdAt_u",
           "updateAt_u"
-        ]
-      },
-      "Produto": {
-        "type": "object",
-        "properties": {
-          "id_p": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "nome_p": {
-            "type": "string"
-          },
-          "descrição_p": {
-            "type": "string"
-          },
-          "preço_p": {
-            "type": "number"
-          },
-          "quantidadeEstoque": {
-            "type": "integer"
-          },
-          "categoria": {
-            "type": "string"
-          },
-          "status_p": {
-            "type": "string",
-            "description": "estado",
-            "enum": [
-              "ATIVO",
-              "INATIVO"
-            ]
-          },
-          "fornecedorId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "data_fabricação": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "data_validade": {
-            "type": "string",
-            "format": "date-time"
-          }
+        ],
+        "example": {
+          "id_u": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+          "nome_u": "Carlos Henrique Souza",
+          "email_u": "carlos.souza@example.com",
+          "senha_u": "SenhaForte#2026",
+          "telefone_u": "+55 16 98888-7766",
+          "status_u": "ATIVO",
+          "createdAt_u": "2026-08-20T12:00:00Z",
+          "updateAt_u": "2026-08-20T12:00:00Z"
         },
-        "required": [
-          "nome_p",
-          "descrição_p",
-          "status_p",
-          "preço_p",
-          "id_p",
-          "quantidadeEstoque",
-          "categoria",
-          "fornecedorId",
-          "data_fabricação",
-          "data_validade"
-        ]
+        "additionalProperties": false
       },
-      "Cliente": {
+      "CreateUsuarioDTO": {
         "type": "object",
+        "description": "Dados para cadastro de usuário. A senha é aceita somente na entrada.",
         "properties": {
-          "id_c": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "nome_c": {
-            "type": "string"
-          },
-          "email_c": {
-            "type": "string",
-            "format": "email"
-          },
-          "telefone_c": {
-            "type": "string"
-          },
-          "status_c": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id_c",
-          "nome_c",
-          "email_c",
-          "telefone_c",
-          "status_c"
-        ]
-      },
-      "Fornecedor": {
-        "type": "object",
-        "properties": {
-          "id_f": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "razaoSocial_f": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 150
-          },
-          "nomeFantasia_f": {
-            "type": "string",
-            "description": "estado",
-            "minLength": 3,
-            "maxLength": 100
-          },
-          "cnpj": {
-            "type": "string",
-            "maxLength": 18
-          },
-          "email_f": {
-            "type": "string",
-            "format": "email"
-          },
-          "telefone_f": {
-            "type": "string",
-            "maxLength": 20
-          },
-          "endereco_f": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "cidade": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "estado": {
-            "type": "string",
-            "maxLength": 2
-          },
-          "cep": {
-            "type": "string",
-            "maxLength": 9
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "ATIVO",
-              "INATIVO"
-            ]
-          },
-          "createdAT": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedAT": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id_f",
-          "razaoSocial_f",
-          "nomeFantasia_f",
-          "email_f",
-          "cnpj",
-          "telefone_f",
-          "endereco_f",
-          "cidade",
-          "estado",
-          "cep",
-          "status",
-          "createdAT",
-          "modifiedAT"
-        ]
-      },
-      "UsuarioPublico": {
-        "type": "object",
-        "properties": {
-          "id_u": {
-            "type": "string",
-            "format": "uuid"
-          },
           "nome_u": {
             "type": "string",
+            "description": "Nome completo do usuário.",
+            "example": "Carlos Henrique Souza",
             "minLength": 3,
-            "maxLength": 100
+            "maxLength": 100,
+            "x-apidog-mock": "{{$person.fullName}}",
+            "nullable": false
           },
           "email_u": {
             "type": "string",
-            "format": "email"
+            "description": "E-mail utilizado para identificação do usuário.",
+            "format": "email",
+            "example": "carlos.souza@example.com",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "senha_u": {
+            "type": "string",
+            "description": "Senha informada no cadastro. Nunca deve ser retornada em respostas; armazenar somente versão protegida/hash.",
+            "example": "SenhaForte#2026",
+            "minLength": 8,
+            "maxLength": 100,
+            "writeOnly": true,
+            "nullable": false
           },
           "telefone_u": {
             "type": "string",
-            "maxLength": 20
+            "description": "Telefone de contato do usuário.",
+            "example": "+55 16 98888-7766",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
           },
           "status_u": {
             "type": "string",
-            "description": "estado",
+            "description": "Situação de acesso do usuário.",
+            "example": "ATIVO",
             "enum": [
               "INATIVO",
               "ATIVO"
-            ]
+            ],
+            "nullable": false
+          }
+        },
+        "required": [
+          "nome_u",
+          "email_u",
+          "senha_u",
+          "telefone_u",
+          "status_u"
+        ],
+        "example": {
+          "nome_u": "Carlos Henrique Souza",
+          "email_u": "carlos.souza@example.com",
+          "senha_u": "SenhaForte#2026",
+          "telefone_u": "+55 16 98888-7766",
+          "status_u": "ATIVO"
+        },
+        "additionalProperties": false
+      },
+      "UsuarioPublico": {
+        "type": "object",
+        "description": "Representação pública de usuário. Não contém senha.",
+        "properties": {
+          "id_u": {
+            "type": "string",
+            "description": "Identificador único do usuário.",
+            "format": "uuid",
+            "example": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+            "nullable": false,
+            "x-apidog-mock": "{{$datatype.uuid}}"
+          },
+          "nome_u": {
+            "type": "string",
+            "description": "Nome completo do usuário.",
+            "example": "Carlos Henrique Souza",
+            "minLength": 3,
+            "maxLength": 100,
+            "x-apidog-mock": "{{$person.fullName}}",
+            "nullable": false
+          },
+          "email_u": {
+            "type": "string",
+            "description": "E-mail utilizado para identificação do usuário.",
+            "format": "email",
+            "example": "carlos.souza@example.com",
+            "maxLength": 254,
+            "x-apidog-mock": "{{$internet.email}}",
+            "nullable": false
+          },
+          "telefone_u": {
+            "type": "string",
+            "description": "Telefone de contato do usuário.",
+            "example": "+55 16 98888-7766",
+            "minLength": 8,
+            "maxLength": 20,
+            "x-apidog-mock": "{{$phone.number}}",
+            "nullable": false
+          },
+          "status_u": {
+            "type": "string",
+            "description": "Situação de acesso do usuário.",
+            "example": "ATIVO",
+            "enum": [
+              "INATIVO",
+              "ATIVO"
+            ],
+            "nullable": false
           },
           "createdAt_u": {
             "type": "string",
-            "format": "date-time"
+            "description": "Data e hora de criação do cadastro, gerada pelo servidor.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
           },
           "updateAt_u": {
             "type": "string",
-            "format": "date-time"
+            "description": "Data e hora da última atualização do cadastro.",
+            "format": "date-time",
+            "example": "2026-08-20T12:00:00Z",
+            "nullable": false,
+            "x-apidog-mock": "{{$date.recent}}"
           }
         },
         "required": [
@@ -1194,46 +2340,99 @@
           "status_u",
           "createdAt_u",
           "updateAt_u"
-        ]
+        ],
+        "example": {
+          "id_u": "9c20a7b5-3d8e-4f61-8a2b-5e7d1c9f4a30",
+          "nome_u": "Carlos Henrique Souza",
+          "email_u": "carlos.souza@example.com",
+          "telefone_u": "+55 16 98888-7766",
+          "status_u": "ATIVO",
+          "createdAt_u": "2026-08-20T12:00:00Z",
+          "updateAt_u": "2026-08-20T12:00:00Z"
+        },
+        "additionalProperties": false
       },
       "InvalidParam": {
         "type": "object",
+        "description": "Detalhe de um parâmetro inválido.",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Nome do parâmetro ou campo que causou a falha.",
+            "example": "preço_p",
+            "minLength": 1,
+            "maxLength": 120,
+            "nullable": false
           },
           "reason": {
-            "type": "string"
+            "type": "string",
+            "description": "Descrição objetiva do motivo da falha de validação.",
+            "example": "Deve ser maior ou igual a zero.",
+            "minLength": 1,
+            "maxLength": 500,
+            "nullable": false
           }
         },
         "required": [
           "name",
           "reason"
-        ]
+        ],
+        "additionalProperties": false,
+        "example": {
+          "name": "preço_p",
+          "reason": "Deve ser maior ou igual a zero."
+        }
       },
       "ApiError": {
         "type": "object",
+        "description": "Resposta de erro padronizada compatível com Problem Details (RFC 9457).",
         "properties": {
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "URI que identifica o tipo de problema.",
+            "format": "uri",
+            "example": "/errors/validation-error",
+            "nullable": false
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "Resumo curto e legível do problema.",
+            "example": "Falha de validação",
+            "minLength": 1,
+            "maxLength": 120,
+            "nullable": false
           },
           "status": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Código HTTP correspondente ao erro.",
+            "example": 422,
+            "minimum": 400,
+            "maximum": 599,
+            "nullable": false
           },
           "detail": {
-            "type": "string"
+            "type": "string",
+            "description": "Explicação específica sobre a ocorrência do erro.",
+            "example": "Um ou mais campos não passaram pela validação.",
+            "minLength": 1,
+            "maxLength": 2000,
+            "nullable": false
           },
           "instance": {
-            "type": "string"
+            "type": "string",
+            "description": "Caminho da requisição que originou o problema.",
+            "format": "uri",
+            "example": "/api/v1/produtos",
+            "nullable": false
           },
           "invalidParams": {
             "type": "array",
+            "description": "Lista de campos ou parâmetros inválidos, quando aplicável.",
             "items": {
               "$ref": "#/components/schemas/InvalidParam"
-            }
+            },
+            "minItems": 1,
+            "nullable": false
           }
         },
         "required": [
@@ -1242,12 +2441,30 @@
           "status",
           "detail",
           "instance"
-        ]
+        ],
+        "example": {
+          "type": "/errors/validation-error",
+          "title": "Falha de validação",
+          "status": 422,
+          "detail": "O campo preço_p deve ser maior ou igual a zero.",
+          "instance": "/api/v1/produtos",
+          "invalidParams": [
+            {
+              "name": "preço_p",
+              "reason": "Deve ser maior ou igual a zero."
+            }
+          ]
+        },
+        "additionalProperties": false
       }
     },
     "responses": {},
     "securitySchemes": {}
   },
   "servers": [],
-  "security": []
+  "security": [],
+  "externalDocs": {
+    "description": "Documentação e modelagem do contrato no Apidog conforme a atividade acadêmica Design-First.",
+    "url": "https://apidog.com/"
+  }
 }
