@@ -1,87 +1,208 @@
-# API_Programacao-WEB
+# API de Gestão de Vendas e Entregas
 
-SuperEntregas API
+## 1. Visão geral
 
-1.Visão Geral
+A **API de Gestão de Vendas e Entregas** é uma API REST desenvolvida
+para disponibilizar operações de gerenciamento de clientes, produtos,
+usuários e fornecedores.
 
-A SuperEntregas API é uma interface de programação de aplicações REST destinada ao gerenciamento de serviços de entrega de diferentes categorias de produtos, incluindo alimentos, documentos, compras, presentes e encomendas.
+A API define contratos para troca de informações no formato JSON,
+utilizando recursos identificados por URLs e métodos HTTP. Sua
+especificação é organizada segundo a abordagem **Design-First**, na qual
+os contratos da API são definidos e documentados antes da implementação
+dos serviços.
 
-O projeto tem como finalidade centralizar o cadastro de entregadores, o registro de solicitações de entrega, o acompanhamento de status, as informações de origem e destino e os comprovantes de recebimento.
+A documentação da API é mantida no **Apidog**, com especificação baseada
+em **OpenAPI**.
 
-A solução foi idealizada para atender entregadores autônomos, pequenas empresas de logística e aplicações que necessitam integrar serviços de entrega aos seus sistemas.
+## 2. Objetivo
 
-2.Objetivo
+O objetivo do projeto é especificar e desenvolver uma API REST para
+centralizar operações relacionadas ao cadastro e à consulta de
+informações utilizadas em um sistema de gestão de vendas e entregas.
 
-Desenvolver a especificação de uma API REST utilizando a abordagem Design-First, estabelecendo previamente os contratos de comunicação, as estruturas de dados, as regras de validação e os comportamentos esperados das requisições e respostas.
+A versão atual do contrato contempla quatro recursos principais:
 
-A documentação será desenvolvida no Apidog com utilização de Schemas reutilizáveis e simulação de operações por meio de Mock Server.
+-   **Clientes:** armazenamento e consulta dos dados dos clientes.
+-   **Produtos:** cadastro e consulta de produtos, incluindo informações
+    de preço, estoque, categoria, validade e fornecedor.
+-   **Usuários:** cadastro e consulta de usuários do sistema.
+-   **Fornecedores:** cadastro e consulta de fornecedores e seus dados
+    cadastrais.
 
-3.Funcionalidades
+## 3. Funcionalidades previstas no contrato atual
 
-Cadastro, consulta, atualização e exclusão de entregadores.
+As operações documentadas para os quatro recursos incluem:
 
-Cadastro, consulta, atualização e exclusão de entregas.
+-   Consultar clientes, com possibilidade de filtrar pelo nome.
+-   Cadastrar clientes.
+-   Excluir clientes pelo identificador.
+-   Consultar produtos, com filtros por nome e quantidade em estoque.
+-   Cadastrar produtos, associando-os a um fornecedor.
+-   Excluir produtos pelo identificador.
+-   Consultar usuários, com possibilidade de filtrar pelo nome.
+-   Cadastrar usuários.
+-   Excluir usuários pelo identificador.
+-   Consultar fornecedores pelo nome.
+-   Cadastrar fornecedores.
+-   Excluir fornecedores pelo identificador.
 
-Associação de um entregador a uma entrega.
+**Observação:** a especificação atual contempla operações de consulta,
+cadastro e exclusão. Operações de atualização, consulta individual por
+identificador para todos os recursos, pedidos, vendas e processos de
+entrega não fazem parte do contrato documentado nesta versão.
 
-Identificação da categoria do produto transportado.
+## 4. Arquitetura dos recursos e relacionamentos
 
-Registro de endereço de coleta e endereço de destino.
+A API está organizada em quatro recursos:
 
-Acompanhamento do status da entrega.
+### 4.1. Clientes
 
-Armazenamento de informações de rota e distância estimada.
+Representa as pessoas cadastradas como clientes do sistema. Os campos
+definidos no contrato incluem:
 
-Registro de comprovante de recebimento.
+-   `id_c`: identificador do cliente.
+-   `nome_c`: nome do cliente.
+-   `email_c`: endereço de e-mail.
+-   `telefone_c`: telefone para contato.
+-   `status_c`: situação cadastral.
 
-Consulta de entregas utilizando filtros e paginação.
+### 4.2. Produtos
 
-4.Arquitetura dos Recursos
+Representa os produtos cadastrados para gerenciamento. Os campos
+definidos no contrato incluem:
 
-Entregadores
+-   `id_p`: identificador do produto.
+-   `nome_p`: nome do produto.
+-   `descrição_p`: descrição do produto.
+-   `preço_p`: preço do produto.
+-   `quantidadeEstoque`: quantidade disponível em estoque.
+-   `categoria`: categoria do produto.
+-   `status_p`: situação do produto.
+-   `fornecedorId`: identificador do fornecedor relacionado.
+-   `data_fabricação`: data de fabricação.
+-   `data_validade`: data de validade.
 
-Representa os profissionais responsáveis pela execução dos serviços de entrega.
+**Relacionamento:** o campo `fornecedorId` identifica o fornecedor
+associado ao produto.
 
-Seus principais atributos são identificador, nome, e-mail, telefone, tipo de veículo e status.
+### 4.3. Usuários
 
-Entregas
+Representa os usuários cadastrados para utilização do sistema. Os campos
+definidos no contrato incluem:
 
-Representa as solicitações de transporte, incluindo identificação do produto, endereços, destinatário, entregador responsável, status, informações de rota e comprovante.
+-   `id_u`: identificador do usuário.
+-   `nome_u`: nome do usuário.
+-   `email_u`: endereço de e-mail.
+-   `senha_u`: senha utilizada no cadastro.
+-   `telefone_u`: telefone para contato.
+-   `status_u`: situação do usuário.
+-   `createdAt_u`: data de criação do registro.
+-   `updateAt_u`: data da última atualização.
 
-Relacionamento entre Recursos
+Por segurança, a senha não deve ser exposta nas respostas da API.
 
-Um entregador pode estar associado a várias entregas. Cada entrega pode estar associada a um único entregador ou permanecer sem responsável até a atribuição.
+### 4.4. Fornecedores
 
-O relacionamento é estabelecido pelo atributo entregadorId presente no recurso Entrega.
+Representa as empresas ou pessoas responsáveis pelo fornecimento dos
+produtos. Os campos definidos no contrato incluem:
 
-5.Padrões Técnicos
+-   `id_f`: identificador do fornecedor.
+-   `razaoSocial_f`: razão social.
+-   `nomeFantasia_f`: nome fantasia.
+-   `cnpj`: CNPJ.
+-   `email_f`: endereço de e-mail.
+-   `telefone_f`: telefone para contato.
+-   `endereco_f`: endereço.
+-   `cidade`: cidade.
+-   `estado`: unidade federativa.
+-   `cep`: código de endereçamento postal.
+-   `status`: situação cadastral.
+-   `createdAT`: data de criação do registro.
+-   `modifiedAT`: data da última modificação.
 
-Estilo arquitetural: REST
+## 5. Endpoints documentados
 
-Protocolo: HTTP/HTTPS
+A versão atual utiliza o prefixo `/v1/api`.
 
-Formato de dados: JSON
+  ---------------------------------------------------------------------------------------
+  Recurso           Método            Endpoint                          Operação
+  ----------------- ----------------- --------------------------------- -----------------
+  Clientes          GET               `/v1/api/clientes`                Listar e filtrar
+                                                                        clientes
 
-Versionamento: /api/v1
+  Clientes          POST              `/v1/api/clientes`                Cadastrar cliente
 
-Identificadores: UUID
+  Clientes          DELETE            `/v1/api/clientes/{id_c}`         Excluir cliente
 
-Documentação: Apidog
+  Produtos          GET               `/v1/api/produtos/`               Listar e filtrar
+                                                                        produtos
 
-Especificação: OpenAPI
+  Produtos          POST              `/v1/api/produtos`                Cadastrar produto
 
-Estratégia de desenvolvimento: Design-First
+  Produtos          DELETE            `/v1/api/produtos/{id_p}`         Excluir produto
 
-Simulação: Mock Server do Apidog
+  Usuários          GET               `/v1/api/usuarios`                Listar e filtrar
+                                                                        usuários
 
-6.Equipe
+  Usuários          POST              `/v1/api/usuarios`                Cadastrar usuário
 
-Adriana Gasparetto Martelli 2840482423026
-Alexandre Vitoriano Ulloa 2840482423***
-Wilson Lau Junior 2840482423013
+  Usuários          DELETE            `/v1/api/usuarios/{id_u}`         Excluir usuário
 
-7.Escopo da Primeira Versão
+  Fornecedores      GET               `/v1/api/fornecedores/{nome_f}`   Consultar
+                                                                        fornecedor pelo
+                                                                        nome
 
-A primeira versão contempla dois recursos principais, Entregadores e Entregas, com operações CRUD completas.
+  Fornecedores      POST              `/v1/api/fornecedores`            Cadastrar
+                                                                        fornecedor
 
-As funcionalidades de acompanhamento de rota e comprovante de recebimento são inicialmente representadas por atributos do recurso Entrega, permitindo sua evolução futura para serviços específicos.
+  Fornecedores      DELETE            `/v1/api/fornecedores/{id_f}`     Excluir
+                                                                        fornecedor
+  ---------------------------------------------------------------------------------------
+
+Os parâmetros de consulta documentados são:
+
+-   Clientes: `nome_c`.
+-   Produtos: `nome_p` e `quantidadeEstoque`.
+-   Usuários: `nome_u`.
+
+## 6. Padrões técnicos
+
+A especificação e a implementação do projeto seguem os seguintes padrões
+e tecnologias:
+
+-   **Estilo arquitetural:** REST.
+-   **Formato de dados:** JSON.
+-   **Protocolo:** HTTP/HTTPS.
+-   **Versionamento das rotas:** `/v1/api`.
+-   **Documentação e design do contrato:** Apidog.
+-   **Especificação da API:** OpenAPI.
+-   **Abordagem de desenvolvimento:** Design-First.
+-   **Identificadores:** UUID nos recursos que possuem identificadores
+    definidos dessa forma no contrato.
+
+Na implementação prevista pelo projeto, são utilizadas tecnologias como
+Python 3.12+, FastAPI, Pydantic v2 e pytest.
+
+## 7. Equipe
+
+  Integrante                    Registro acadêmico
+  ----------------------------- --------------------
+  Adriana Gasparetto Martelli   2840482423026
+  Alexandre Vitoriano Ulloa     2840482423\*\*\*
+  Wilson Lau Junior             2840482423013
+
+> O registro acadêmico de Alexandre está parcialmente informado no
+> README anterior e deve ser completado antes da entrega final.
+
+## 8. Escopo e evolução
+
+A versão atual da API concentra-se no gerenciamento de clientes,
+produtos, usuários e fornecedores, com operações de consulta, cadastro e
+exclusão.
+
+A evolução do projeto poderá contemplar funcionalidades relacionadas a
+pedidos, vendas, itens de venda, tarefas de entrega, prazos,
+acompanhamento de entregas e comprovantes de recebimento. Esses recursos
+são possibilidades de evolução e deverão ser especificados no Apidog
+antes de serem incorporados ao contrato e à implementação.
